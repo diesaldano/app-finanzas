@@ -1,0 +1,68 @@
+{
+  "header": {
+    "title": "Compra y Venta de Dólares"
+  },
+  "footer": {
+    "yearText": "Todos los derechos reservados.",
+    "contact": "Contacto",
+    "about": "Quiénes Somos",
+    "terms": "Términos y Condiciones",
+    "securityText": "Estamos comprometidos con la seguridad y confiabilidad en cada operación."
+  },
+  "howItWorks": {
+    "title": "¿Cómo Funciona?",
+    "steps": [
+      {
+        "icon": "FaFileSignature",
+        "title": "Completa el Formulario",
+        "description": "Llena tus datos en nuestro formulario de contacto para iniciar el proceso de compra o venta de dólares. Nos encargamos de brindarte la mejor cotización disponible."
+      },
+      {
+        "icon": "FaWhatsapp",
+        "title": "Recibe una Confirmación",
+        "description": "En menos de 24 horas recibirás un mensaje de WhatsApp con los detalles de la cotización y las instrucciones para completar tu operación de manera rápida y segura."
+      },
+      {
+        "icon": "FaDollarSign",
+        "title": "Realiza tu Operación",
+        "description": "Concreta tu compra o venta de dólares de acuerdo a la cotización recibida, todo de forma segura y confiable. ¡Estamos aquí para asistirte en cada paso!"
+      }
+    ]
+  },
+  "aboutUs": {
+    "title": "Sobre nosotros",
+    "startYear": 2019,
+    "description1": "Desde hace más de {years} años, nos especializamos en la compra y venta de dólares en el mercado minorista, brindando a nuestros clientes las mejores cotizaciones y una atención confiable.",
+    "description2": "Nos apasiona el mundo financiero, y creemos en la importancia de ofrecer un servicio transparente y seguro para nuestros usuarios.",
+    "description3": "Nos enorgullece que nuestros clientes sigan confiando en nosotros a lo largo del tiempo, manteniéndonos en su radar para futuras transacciones."
+  },
+  "contactForm": {
+    "title": "Obtené la Mejor Cotización",
+    "notice": "(Por el momento, solo cotizamos en CABA + PBA)",
+    "fields": {
+      "name": "Nombre y Apellido",
+      "wsp": "Número de WhatsApp",
+      "residence": "Lugar de Residencia",
+      "operation": "Tipo de Operación",
+      "amount": "Cantidad"
+    },
+    "residenceOptions": {
+      "zona_norte": "Zona Norte",
+      "zona_sur": "Zona Sur",
+      "zona_oeste": "Zona Oeste",
+      "caba": "CABA",
+      "interior_bs_as": "Interior de Buenos Aires"
+    },
+    "operationOptions": {
+      "buy": "Comprar dólares",
+      "sell": "Vender dólares"
+    },
+    "amountHelp": "Ingrese la cantidad en dólares. Ejemplo: 1000 USD.",
+    "warnings": [
+      "* Cambios menores a 100 dólares tienen menor cotización.",
+      "* Billetes con cara chica tienen menor valor de cambio."
+    ],
+    "buttonText": "Enviar",
+    "captchaText": "* Se requiere completar el captcha antes de enviar."
+  }
+}
