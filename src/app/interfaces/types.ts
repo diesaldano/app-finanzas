@@ -1,5 +1,5 @@
-// Definir interfaces basadas en text.json
-interface FooterData {
+
+export interface FooterData {
   yearText: string;
   contact: string;
   about: string;
@@ -7,30 +7,30 @@ interface FooterData {
   securityText: string;
 }
 
-interface HeaderData {
+export interface HeaderData {
   title: string;
 }
 
-interface Step {
-  icon: string;
-  title: string;
-  description: string;
+export interface Step {
+  icon?: string;
+  title?: string;
+  description?: string;
 }
 
-interface HowItWorksData {
+export interface HowItWorksData {
   title: string;
   steps: Step[];
 }
 
-interface AboutUsData {
+export interface AboutUsData {
   title: string;
-  startYear: number;
+  startYear: string;
   description1: string;
   description2: string;
   description3: string;
 }
 
-interface ContactFormData {
+export interface ContactFormData {
   title: string;
   notice: string;
   fields: {
@@ -58,10 +58,12 @@ interface ContactFormData {
   captchaText: string;
 }
 
-interface TextData {
+export interface TextData {
   header: HeaderData;
   footer: FooterData;
   howItWorks: HowItWorksData;
   aboutUs: AboutUsData;
   contactForm: ContactFormData;
 }
+
+

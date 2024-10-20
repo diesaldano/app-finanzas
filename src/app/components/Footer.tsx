@@ -1,3 +1,4 @@
+import { FooterData } from "../interfaces/types";
 
 interface FooterProps {
   data: FooterData;

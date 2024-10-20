@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image'; // Si tienes un logo
+import { ContactFormData } from '../interfaces/types';
 
 interface FormProps {
   data: ContactFormData;

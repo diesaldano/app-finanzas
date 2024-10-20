@@ -8,8 +8,12 @@ import Form from './components/Form'
 import Funcionamiento from './components/Funcionamiento'
 import Footer from './components/Footer';
 import AboutUs from './components/aboutUs';
+import { TextData } from './interfaces/types'
+
 
 export default function Home() {
+  const data: TextData = texts
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -68,19 +72,19 @@ export default function Home() {
       </nav>
 
       {/* Imagen principal y título */}
-      <Header tittle={texts.header} />
+      <Header data={data.header} />
 
       {/* ¿Cómo Funciona? */}
-      <Funcionamiento texts={texts.howItWorks} />
+      <Funcionamiento data={data.howItWorks} />
 
       {/* Formulario de contacto */}
-      <Form texts={texts.contactForm}/>
+      <Form data={data.contactForm}/>
 
       {/* Quiénes somos */}
-      <AboutUs texts={texts.aboutUs} startYear={texts.aboutUs.startYear}/>
+      <AboutUs data={data.aboutUs} />
 
       {/* Footer */}
-      <Footer texts={texts.footer} />
+      <Footer data={data.footer} />
     </div>
   );
 }
