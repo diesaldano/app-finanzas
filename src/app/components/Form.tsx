@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import Image from 'next/image'; // Si tienes un logo
 
-export default function ContactForm({ texts } : any) {
+interface FormProps {
+  data: ContactFormData;
+}
+
+
+export default function ContactForm({ data } : FormProps) {
   const [formData, setFormData] = useState({
     nombre: "",
     wsp: "",
@@ -32,12 +37,12 @@ export default function ContactForm({ texts } : any) {
           <Image src="/logo.png" alt="Logo" width={60} height={60} />
         </div>
 
-        <h2 className="text-3xl font-bold text-center mb-4">{texts.title}</h2>
-        <p className="text-center text-red-500 mb-4">{texts.notice}</p>
+        <h2 className="text-3xl font-bold text-center mb-4">{data.title}</h2>
+        <p className="text-center text-red-500 mb-4">{data.notice}</p>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-lg font-semibold" htmlFor="nombre">{texts.fields.name}</label>
+            <label className="block text-lg font-semibold" htmlFor="nombre">{data.fields.name}</label>
             <input
               type="text"
               id="nombre"
@@ -50,7 +55,7 @@ export default function ContactForm({ texts } : any) {
           </div>
 
           <div className="mb-4">
-            <label className="block text-lg font-semibold" htmlFor="wsp">{texts.fields.wsp}</label>
+            <label className="block text-lg font-semibold" htmlFor="wsp">{data.fields.wsp}</label>
             <input
               type="tel"
               id="wsp"
@@ -63,7 +68,7 @@ export default function ContactForm({ texts } : any) {
           </div>
 
           <div className="mb-4">
-            <label className="block text-lg font-semibold" htmlFor="residencia">{texts.fields.residence}</label>
+            <label className="block text-lg font-semibold" htmlFor="residencia">{data.fields.residence}</label>
             <select
               id="residencia"
               name="residencia"
@@ -72,17 +77,17 @@ export default function ContactForm({ texts } : any) {
               onChange={handleChange}
               required
             >
-              <option value="">{texts.fields.selectPlaceholder}</option>
-              <option value="zona_norte">{texts.residenceOptions.zona_norte}</option>
-              <option value="zona_sur">{texts.residenceOptions.zona_sur}</option>
-              <option value="zona_oeste">{texts.residenceOptions.zona_oeste}</option>
-              <option value="caba">{texts.residenceOptions.caba}</option>
-              <option value="interior_bs_as">{texts.residenceOptions.interior_bs_as}</option>
+              <option value="">{data.fields.selectPlaceholder}</option>
+              <option value="zona_norte">{data.residenceOptions.zona_norte}</option>
+              <option value="zona_sur">{data.residenceOptions.zona_sur}</option>
+              <option value="zona_oeste">{data.residenceOptions.zona_oeste}</option>
+              <option value="caba">{data.residenceOptions.caba}</option>
+              <option value="interior_bs_as">{data.residenceOptions.interior_bs_as}</option>
             </select>
           </div>
 
           <div className="mb-4">
-            <label className="block text-lg font-semibold" htmlFor="operacion">{texts.fields.operation}</label>
+            <label className="block text-lg font-semibold" htmlFor="operacion">{data.fields.operation}</label>
             <select
               id="operacion"
               name="operacion"
@@ -91,14 +96,14 @@ export default function ContactForm({ texts } : any) {
               onChange={handleChange}
               required
             >
-              <option value="">{texts.fields.selectPlaceholder}</option>
-              <option value="comprar">{texts.operationOptions.buy}</option>
-              <option value="vender">{texts.operationOptions.sell}</option>
+              <option value="">{data.fields.selectPlaceholder}</option>
+              <option value="comprar">{data.operationOptions.buy}</option>
+              <option value="vender">{data.operationOptions.sell}</option>
             </select>
           </div>
 
           <div className="mb-4">
-            <label className="block text-lg font-semibold" htmlFor="cantidad">{texts.fields.amount}</label>
+            <label className="block text-lg font-semibold" htmlFor="cantidad">{data.fields.amount}</label>
             <input
               type="number"
               id="cantidad"
@@ -108,11 +113,11 @@ export default function ContactForm({ texts } : any) {
               onChange={handleChange}
               required
             />
-            <p className="text-sm text-gray-500">{texts.amountHelp}</p>
+            <p className="text-sm text-gray-500">{data.amountHelp}</p>
           </div>
 
           <div className="mb-4">
-            {texts.warnings.map((warning: string, index: number) => (
+            {data.warnings.map((warning: string, index: number) => (
               <p key={index} className="text-sm text-red-500">{warning}</p>
             ))}
           </div>
@@ -122,12 +127,12 @@ export default function ContactForm({ texts } : any) {
             type="submit"
             className="bg-primary text-white py-2 px-4 w-full hover:bg-secondary transition rounded shadow"
           >
-            {texts.buttonText}
+            {data.buttonText}
           </button>
 
           {/* Captcha */}
           <div className="mt-4">
-            <p className="text-sm text-gray-600">{texts.captchaText}</p>
+            <p className="text-sm text-gray-600">{data.captchaText}</p>
             {/* Aquí iría el captcha real */}
           </div>
         </form>
