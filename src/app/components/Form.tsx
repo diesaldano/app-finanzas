@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from 'react';
-import Image from 'next/image'; // Si tienes un logo
+// import Image from 'next/image'; // Si tienes un logo
 import { ContactFormData } from '../interfaces/types';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 interface FormProps {
   data: ContactFormData;
 }
 
 
-export default function ContactForm({ data } : FormProps) {
+export default function ContactForm({ data }: FormProps) {
   const [formData, setFormData] = useState({
     nombre: "",
     wsp: "",
@@ -18,6 +19,9 @@ export default function ContactForm({ data } : FormProps) {
     cantidad: ""
   });
 
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const hadleCaptchaToken = (token: string | null) => setCaptchaToken(token);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
@@ -25,9 +29,22 @@ export default function ContactForm({ data } : FormProps) {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí se procesa el formulario
+    // Aquí se procesa el token
+    if (!captchaToken) return alert('Por favor, debe completar el captcha token');
+
+    const response = await fetch('/api/verify-captcha', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ token: captchaToken })
+    });
+
+    const data = await response.json();
+    if (data.success) alert('Verificacion exitosa');
+    else alert('Verificacion fallida');
   };
 
   return (
@@ -35,7 +52,8 @@ export default function ContactForm({ data } : FormProps) {
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
         {/* Logo en la parte superior */}
         <div className="flex justify-center mb-6">
-          <Image src="/logo.png" alt="Logo" width={60} height={60} />
+          {/* <Image src="/logo.png" alt="Logo" width={60} height={60} />  */}
+          <h1 className="text-gray text-2xl">Finanzas del Norte</h1>
         </div>
 
         <h2 className="text-3xl font-bold text-center mb-4">{data.title}</h2>
@@ -135,13 +153,17 @@ export default function ContactForm({ data } : FormProps) {
           <div className="mt-4">
             <p className="text-sm text-gray-600">{data.captchaText}</p>
             {/* Aquí iría el captcha real */}
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_SITE_KEY  || ""}
+              onChange={hadleCaptchaToken}
+            />
           </div>
         </form>
 
         {/* Logo en la parte inferior, si es necesario */}
-        <div className="flex justify-center mt-6">
+        {/* <div className="flex justify-center mt-6">
           <Image src="/logo.png" alt="Logo" width={40} height={40} />
-        </div>
+        </div> */}
       </div>
     </section>
   );

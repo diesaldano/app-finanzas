@@ -32,7 +32,7 @@
   "aboutUs": {
     "title": "Sobre nosotros",
     "startYear": "2019",
-    "description1": "Desde hace más de {years} años, nos especializamos en la compra y venta de dólares en el mercado minorista, brindando a nuestros clientes las mejores cotizaciones y una atención confiable.",
+    "description1": "Desde {years}, nos especializamos en la compra y venta de dólares en el mercado minorista, brindando a nuestros clientes las mejores cotizaciones y una atención confiable.",
     "description2": "Nos apasiona el mundo financiero, y creemos en la importancia de ofrecer un servicio transparente y seguro para nuestros usuarios.",
     "description3": "Nos enorgullece que nuestros clientes sigan confiando en nosotros a lo largo del tiempo, manteniéndonos en su radar para futuras transacciones."
   },

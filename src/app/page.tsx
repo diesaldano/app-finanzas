@@ -1,6 +1,6 @@
 
 "use client";
-import texts from '../public/data/texts.json';
+import texts from '../../public/data/texts.json';
 import { useEffect, useState } from 'react';
 
 import Header from './components/Header'
