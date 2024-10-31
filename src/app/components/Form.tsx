@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import Spinner from './Spinner';
 import Alert from './Alert';
 import { useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import { ContactFormData } from '../interfaces/types';
 import { motion } from 'framer-motion';
 
@@ -34,11 +34,11 @@ const ContactFormSchema = Yup.object().shape({
 export default function ContactForm({ data }: { data: ContactFormData }) {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ message: '', type: 'success', visible: false });
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token);
-  };
+  // const handleCaptchaChange = (token: string | null) => {
+  //   setCaptchaToken(token);
+  // };
 
   const handleSubmit = async (
     values: FormValues,
@@ -58,7 +58,8 @@ export default function ContactForm({ data }: { data: ContactFormData }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...values, captchaToken }),
+        // body: JSON.stringify({ ...values, captchaToken }),
+        body: JSON.stringify({ ...values }),
       });
       const data = await response.json();
 
@@ -67,7 +68,7 @@ export default function ContactForm({ data }: { data: ContactFormData }) {
       if (data.success) {
         setAlert({ message: 'Correo enviado exitosamente', type: 'success', visible: true });
         resetForm(); // Limpia el formulario tras el envío exitoso
-        setCaptchaToken(null); // Restablece el token de reCAPTCHA
+        // setCaptchaToken(null); // Restablece el token de reCAPTCHA
       } else {
         setAlert({ message: 'Error enviando el correo', type: 'error', visible: true });
       }
