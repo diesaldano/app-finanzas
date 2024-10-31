@@ -9,6 +9,7 @@ import Funcionamiento from './components/Funcionamiento'
 import Footer from './components/Footer';
 import AboutUs from './components/aboutUs';
 import { TextData } from './interfaces/types'
+import ExchangeRatesTicker from './components/ExchangeRatesTicker';
 
 
 export default function Home() {
@@ -73,6 +74,8 @@ export default function Home() {
 
       {/* Imagen principal y título */}
       <Header data={data.header} />
+
+      <ExchangeRatesTicker />
 
       {/* ¿Cómo Funciona? */}
       <Funcionamiento data={data.howItWorks} />

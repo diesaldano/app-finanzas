@@ -44,10 +44,10 @@ export default function ContactForm({ data }: { data: ContactFormData }) {
     values: FormValues,
     { resetForm }: FormikHelpers<FormValues>
   ) => {
-    if (!captchaToken) {
-      setAlert({ message: 'Por favor, completa el reCAPTCHA', type: 'error', visible: true });
-      return;
-    }
+    // if (!captchaToken) {
+    //   setAlert({ message: 'Por favor, completa el reCAPTCHA', type: 'error', visible: true });
+    //   return;
+    // }
 
     setLoading(true);
     setAlert({ message: '', type: 'success', visible: false });
@@ -191,12 +191,12 @@ export default function ContactForm({ data }: { data: ContactFormData }) {
               </div>
 
               {/* reCAPTCHA */}
-              <div className="my-4 flex justify-center">
+              {/* <div className="my-4 flex justify-center">
                 <ReCAPTCHA
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
                   onChange={handleCaptchaChange}
                 />
-              </div>
+              </div> */}
 
               {/* Botón de envío con animación de carga */}
               <motion.button

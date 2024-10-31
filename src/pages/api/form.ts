@@ -15,9 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const verifyResponse = await fetch(verifyUrl, { method: 'POST' });
   const verifyData = await verifyResponse.json();
 
-  if (!verifyData.success) {
-    return res.status(400).json({ success: false, message: 'Error de verificación de reCAPTCHA' });
-  }
+  console.log(verifyData)
+
+  // if (!verifyData.success) {
+  //   return res.status(400).json({ success: false, message: 'Error de verificación de reCAPTCHA' });
+  // }
 
   if (!nombre || !wsp || !residencia || !operacion || !cantidad || !email) {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
