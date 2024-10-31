@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Simulación de cotizaciones
   try {
-    const response = await fetch('https://dolarapi.com/v1/cotizaciones');
+    const response = await fetch('https://dolarapi.com/v1/dolares');
     const data = await response.json();
 
     res.status(200).json(data)

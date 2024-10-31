@@ -1,61 +1,60 @@
+// pages/api/form.ts
+
 import nodemailer from 'nodemailer';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Verificar que sea una solicitud POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { 
-    nombre,
-    wsp,
-    residencia,
-    operacion,
-    cantidad 
-  } = req.body;
+  const { nombre, wsp, residencia, operacion, cantidad, email, captchaToken } = req.body;
 
-  // Validar que los campos no estén vacíos
-  if (!nombre || !wsp || !residencia || !operacion || !cantidad) {
+  // Validación de reCAPTCHAx
+  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${captchaToken}`;
+  const verifyResponse = await fetch(verifyUrl, { method: 'POST' });
+  const verifyData = await verifyResponse.json();
+
+  if (!verifyData.success) {
+    return res.status(400).json({ success: false, message: 'Error de verificación de reCAPTCHA' });
+  }
+
+  if (!nombre || !wsp || !residencia || !operacion || !cantidad || !email) {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
   try {
-    // Configurar el transporte de nodemailer
-    const transporter = nodemailer.createTransport({
-      service: 'gmail', // Cambia según el servicio que utilices
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER, // Tu email
-        pass: process.env.GMAIL_PASS, // Tu contraseña o contraseña de aplicación
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS,
       },
       tls: {
-        rejectUnauthorized: false, // Permitir certificados no verificados (si es necesario)
+        rejectUnauthorized: false,
       },
     });
 
-    // Configurar el contenido del correo
     const mailOptions = {
-      from: process.env.GMAIL_USER, // Remitente (tu correo)
-      to: process.env.RECEIVER_EMAIL, // Destinatario (correo donde recibirás la notificación)
-      subject: `Nuevo mensaje de ${nombre}`, // Asunto del correo
+      from: process.env.GMAIL_USER,
+      to: process.env.RECEIVER_EMAIL,
+      subject: `Nuevo mensaje de ${nombre}`,
       text: `
-        Nuevo mensaje de contacto:
-        
+        Usted ha recibido un nuevo mensaje de contacto:
+
         Nombre: ${nombre}
+        Correo Electrónico: ${email}
         WhatsApp: ${wsp}
         Residencia: ${residencia}
-        Operación: ${operacion}
-        Cantidad: ${cantidad}
-      `, // Cuerpo del correo
+        Operación: ${operacion} dólares
+        Cantidad: USD ${cantidad}
+      `,
     };
 
-    // Enviar el correo
     await transporter.sendMail(mailOptions);
-
-    // Responder al frontend con éxito
-    res.status(200).json({ message: 'Correo enviado exitosamente' });
+    res.status(200).json({ success: true, message: 'Correo enviado exitosamente' });
   } catch (error) {
     console.error('Error al enviar correo:', error);
-    res.status(500).json({ message: 'Error enviando el correo' });
+    res.status(500).json({ success: false, message: 'Error enviando el correo' });
   }
 }

@@ -36,6 +36,7 @@ export interface ContactFormData {
   fields: {
     selectPlaceholder: string;
     name: string;
+    email: string;
     wsp: string;
     residence: string;
     operation: string;
