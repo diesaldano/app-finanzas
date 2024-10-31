@@ -42,6 +42,7 @@
     "fields": {
       "selectPlaceholder": "Selecciona una opción",
       "name": "Nombre y Apellido",
+      "email": "Correo Electrónico",
       "wsp": "Número de WhatsApp",
       "residence": "Lugar de Residencia",
       "operation": "Tipo de Operación",

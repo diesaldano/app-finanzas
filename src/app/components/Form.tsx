@@ -1,10 +1,21 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Spinner from './Spinner';
 import Alert from './Alert';
 import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { ContactFormData } from '../interfaces/types';
+import { motion } from 'framer-motion';
 
+// Definición del tipo de los valores del formulario
+type FormValues = {
+  nombre: string;
+  email: string;
+  wsp: string;
+  residencia: string;
+  operacion: string;
+  cantidad: string;
+};
 
 const ContactFormSchema = Yup.object().shape({
   nombre: Yup.string().required('El nombre es obligatorio'),
@@ -20,18 +31,19 @@ const ContactFormSchema = Yup.object().shape({
     .required('La cantidad es obligatoria'),
 });
 
-export default function ContactForm({ data }: any) {
+export default function ContactForm({ data }: { data: ContactFormData }) {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ message: '', type: 'success', visible: false });
-
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token);
   };
 
-  const handleSubmit = async (values: any, { resetForm }: any) => {
-
+  const handleSubmit = async (
+    values: FormValues,
+    { resetForm }: FormikHelpers<FormValues>
+  ) => {
     if (!captchaToken) {
       setAlert({ message: 'Por favor, completa el reCAPTCHA', type: 'error', visible: true });
       return;
@@ -47,7 +59,6 @@ export default function ContactForm({ data }: any) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ ...values, captchaToken }),
-
       });
       const data = await response.json();
 
@@ -61,6 +72,7 @@ export default function ContactForm({ data }: any) {
         setAlert({ message: 'Error enviando el correo', type: 'error', visible: true });
       }
     } catch (error) {
+      console.error(error); 
       setLoading(false);
       setAlert({ message: 'Error en el servidor', type: 'error', visible: true });
     }
@@ -74,7 +86,7 @@ export default function ContactForm({ data }: any) {
         <Alert message={alert.message} type={alert.type as 'success' | 'error'} visible={alert.visible} />
         {loading && <Spinner />}
 
-        <Formik
+        <Formik<FormValues>
           initialValues={{
             nombre: '',
             email: '',
@@ -102,7 +114,7 @@ export default function ContactForm({ data }: any) {
               </div>
 
               <div className="mb-4">
-                <label className="block text-lg font-semibold" htmlFor="email">Correo Electrónico</label>
+                <label className="block text-lg font-semibold" htmlFor="email">{data.fields.email}</label>
                 <Field
                   type="email"
                   id="email"
@@ -177,7 +189,6 @@ export default function ContactForm({ data }: any) {
                 <ErrorMessage name="cantidad" component="p" className="text-red-500 text-sm" />
                 <p className="text-sm text-gray-500">{data.amountHelp}</p>
               </div>
-              {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
 
               {/* reCAPTCHA */}
               <div className="my-4 flex justify-center">
@@ -187,13 +198,19 @@ export default function ContactForm({ data }: any) {
                 />
               </div>
 
-              <button
+              {/* Botón de envío con animación de carga */}
+              <motion.button
                 type="submit"
-                className="bg-primary text-white py-2 px-4 w-full hover:bg-secondary transition rounded shadow"
+                className="bg-primary text-white py-2 px-4 w-full hover:bg-secondary transition rounded shadow relative overflow-hidden"
                 disabled={loading}
               >
-                {data.buttonText}
-              </button>
+                <motion.div
+                  animate={{ width: loading ? '100%' : '0%' }}
+                  transition={{ duration: 2, ease: 'easeInOut' }}
+                  className="absolute top-0 left-0 h-full bg-secondary"
+                />
+                <span className="relative">{loading ? 'Cargando...' : data.buttonText}</span>
+              </motion.button>
             </Form>
           )}
         </Formik>
